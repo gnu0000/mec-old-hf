@@ -1,0 +1,33 @@
+~
+~ premake file for the watcom dos version
+~ ---------------------------------------
+~
+~ The options are optimized for a pentium
+~
+~ hf, crater, rand, fft, libp, arg0, arg1, arg2
+~
+CC      =wcc386
+CFLAGS  =-mf -bt=dos -fp5 -5s -s -w3 -ze -omanetier -5r -zp4 -zq -fo=$(ODIR)\$(@B).obj
+LINKER  =wlink
+LIB     =386lib
+ODIR    =WDOS
+EXEC    =hf
+
+all : $(EXEC).exe
+
+
+:FileList Files = {hf, crater, rand, fft, arg0, arg1, arg2}
+
+:CmdList Cmp = {"$(CC) $(CFLAGS) $(@B).c"}
+
+:Expand Files,Cmp,$(ODIR)\,.obj,,.c,INCLUDES 
+
+$(EXEC).exe : {F: Files,$(ODIR)\,.obj}
+	$(LINKER) @<<$(@B).lnk
+system   dos4g
+option   map=$(EXEC)
+option   stub=wstubq.exe
+option   stack=90000
+name     $(EXEC)
+{X:Files,$(ODIR)\,,comma,file ,3}
+<<nokeep

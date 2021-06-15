@@ -1,0 +1,8 @@
+system   dos4g
+option   map=hf
+option   stub=wstubq.exe
+option   stack=40000
+debug all
+name     hf
+library  gnu32d
+file     hf, crater, fft, rand

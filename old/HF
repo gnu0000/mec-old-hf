@@ -1,0 +1,44 @@
+CC      =wcc386
+CFLAGS  =-mf -bt=dos -fp5 -5s -s -w3 -ze -omanetier -5r -zp4 -zq -fo=$(ODIR)\$(@B).obj
+LINKER  =wlink
+LIB     =386lib
+ODIR    =WDOS
+EXEC    =hf
+
+all : $(EXEC).exe
+
+
+
+
+$(ODIR)\hf.obj : hf.c hf.h rand.h fft.h crater.h GnuArg.h 
+   $(CC) $(CFLAGS) $(@B).c
+
+$(ODIR)\crater.obj : crater.c hf.h crater.h rand.h 
+   $(CC) $(CFLAGS) $(@B).c
+
+$(ODIR)\rand.obj : rand.c hf.h 
+   $(CC) $(CFLAGS) $(@B).c
+
+$(ODIR)\fft.obj : fft.c fft.h 
+   $(CC) $(CFLAGS) $(@B).c
+
+$(ODIR)\arg0.obj : arg0.c arg0.h 
+   $(CC) $(CFLAGS) $(@B).c
+
+$(ODIR)\arg1.obj : arg1.c arg0.h GnuArg.h 
+   $(CC) $(CFLAGS) $(@B).c
+
+$(ODIR)\arg2.obj : arg2.c arg0.h GnuArg.h 
+   $(CC) $(CFLAGS) $(@B).c
+
+$(EXEC).exe : $(ODIR)\hf.obj $(ODIR)\crater.obj $(ODIR)\rand.obj $(ODIR)\fft.obj $(ODIR)\arg0.obj $(ODIR)\arg1.obj $(ODIR)\arg2.obj 
+	$(LINKER) @<<$(@B).lnk
+system   dos4g
+option   map=$(EXEC)
+option   stub=wstubq.exe
+option   stack=90000
+name     $(EXEC)
+file $(ODIR)\hf ,$(ODIR)\crater ,$(ODIR)\rand 
+file $(ODIR)\fft ,$(ODIR)\arg0 ,$(ODIR)\arg1 
+file $(ODIR)\arg2 
+<<nokeep

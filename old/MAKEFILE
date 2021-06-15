@@ -1,0 +1,8 @@
+#
+# default make is for the watcom dos version
+# ------------------------------------------
+all :
+   premake hf.pre hf
+   nmake -nologo -f hf
+
+

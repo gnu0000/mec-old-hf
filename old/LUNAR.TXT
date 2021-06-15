@@ -1,0 +1,9 @@
+The lunar image was produced by
+
+ gforge -pow 1 -craters 1.5 2 -m 200 -type pg8 -seed 837421
+
+and then using ImageMagick 3.6.3 to "emboss" the texture, and xv 3.1 
+to crop off the resulting two-pixel border so the texture is still
+(almost) tilable.
+
+-john beale 8/24/95
